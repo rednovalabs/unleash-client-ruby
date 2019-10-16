@@ -15,7 +15,9 @@ module Unleash
         return false unless context.class.name == 'Unleash::Context'
 
         possible_values = params[VALUE_PARAM].split(",").map(&:strip)
-        context_value = (context.properties[params[PROPERTY_PARAM]] || context.properties[params[PROPERTY_PARAM.to_sym]])&.to_s
+        context_key = params[PROPERTY_PARAM]
+        # indifferent access
+        context_value = (context.properties[context_key] || context.properties[context_key.to_sym])&.to_s
 
         possible_values.include? context_value
       end
